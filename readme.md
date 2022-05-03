@@ -15,5 +15,5 @@ Note: *Make sure you have Metamask installed and have a valid account/wallet; sh
 Resource/s Used:  
 ---
 - [Source Gist](https://gist.github.com/timothycarambat/e7e014a6fd08f33e753bcf2f9e31239e)  
-- [Tutorial used](https://www.youtube.com/watch?v=iEym7VHoly0)
+- [YouTube Tut](https://www.youtube.com/watch?v=iEym7VHoly0)
 - [Metamask Docs](https://docs.metamask.io/guide/)
