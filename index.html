@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metamask Login</title>
+
+    <link href="https://unpkg.com/tailwindcss@^2/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class='flex w-screen h-screen justify-center items-center'>
+    <button id="loginButton" onclick="" class="mx-auto rounded-md p-2 bg-purple-500 text-white">Just a test.</button>
+    <p id="userWallet" class="text-lg text-gray-600 my-2"></p>
+
+    <script>
+        window.userWalletAddress = null;
+        const loginButton = document.getElementById('loginButton');
+        const userWallet = document.getElementById('userWallet');
+
+        function toggleButton() {
+            if (!window.ethereum) {
+                loginButton.innerText = 'Metamask is not installed';
+                loginButton.classList.remove('bg-purple-500', 'text-white');
+                loginButton.classList.add('bg-gray-500', 'text-gray-100', 'cursor-not-allowed');
+                return false;
+            }
+            loginButton.addEventListener('click', loginWithMetamask)
+        }
+
+        async function loginWithMetamask() {
+            const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
+                .catch((e) => {
+                    console.error(e.message)
+                    console.log(accounts)
+                    return;
+                })
+            if (!accounts) {
+                return;
+            }
+
+            window.userWalletAddress = accounts[0];
+            userWallet.innerText = window.userWalletAddress;
+            loginButton.innerText = 'Sign out of Metamask';
+
+            loginButton.removeEventListener('click', loginWithMetamask)
+            setTimeout(() => {
+                loginButton.addEventListener('click', signOutOfMetamask)
+            }, 200);
+        }
+
+        function signOutOfMetamask() {
+            window.userWalletAddress = null;
+            userWallet.innerText = '';
+            loginButton.innerText = 'Sign in with Metamask';
+
+            loginButton.removeEventListener('click', signOutOfMetamask)
+            setTimeout(() => {
+                loginButton.addEventListener('click', loginWithMetamask)
+            }, 200);
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            toggleButton();
+        })
+    </script>
+</body>
+</html>
